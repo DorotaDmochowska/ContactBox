@@ -1,0 +1,190 @@
+{% extends "::base.html.twig" %}
+
+{% block page_title %}
+    <h1>Kontakt - szczegóły</h1>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-2">
+
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <h2>{{ contact.firstName }}</h2>
+                <h2>{{ contact.lastName }}</h2>
+                <p>{{ contact.description }}</p>
+                <p>Grupy:</p>
+                <ul>
+                    {% for group in contact.groups %}
+                        <li>
+                            {{ group.groupName }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a data-toggle="modal" href="{{ path('edit', {'id': contact.id}) }}" data-target="#editModal">edytuj dane</a>
+            </div>
+        </div>
+        <div class="col-lg-1">
+
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <ul style="list-style-type: none">
+                        <li style="display: inline"><h4 style="display: inline">adres</h4></li>
+                        <li style="display: inline; float:right"><a data-toggle="modal" href="{{ path('add_address', {'id': contact.id}) }}" data-target="#addressModal">+ dodaj adres</a></li>
+                    </ul>
+
+                </div>            
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            {% for address in contact.address %}
+                                <tr>
+                                    <th>{{ address.addressType}}</th>
+                                    <td>
+                                        {{ address.city }}, {{ address.street }} {{address.houseNumber }}/{{address.apartmentNumber}}
+                                    </td>
+                                    <td style="text-align: right">
+                                        <a data-toggle="modal" href="{{ path('edit_address', {'id': contact.id, 'address_id': address.id}) }}" data-target="#editAddressModal{{ address.id }}">edytuj</a> | 
+                                        <a href="{{ path('remove_address', {'id': contact.id, 'address_id': address.id }) }}">usuń</a>
+
+                                        {#modal window - edit address #}
+                                        <div id="editAddressModal{{ address.id }}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <ul style="list-style-type: none">
+                        <li style="display: inline"><h4 style="display: inline">e-mail</h4></li>
+                        <li style="display: inline; float:right"><a data-toggle="modal" href="{{ path('add_email', {'id': contact.id}) }}" data-target="#emailModal">+ dodaj e-mail</a></li>
+                    </ul>
+
+                </div>            
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            {% for email in contact.email %}
+                                <tr>
+                                    <th>{{ email.emailType }}</th>
+                                    <td>
+                                        {{email.email}}
+                                    </td>
+                                    <td style="text-align: right">
+                                        <a data-toggle="modal" href="{{ path('edit_email', {'id': contact.id, 'email_id': email.id}) }}" data-target="#editEmailModal{{ email.id }}">edytuj</a> | 
+                                        <a href="{{ path('remove_email', {'id': contact.id, 'email_id': email.id }) }}">usuń</a>
+
+                                        {#modal window - edit email #}
+                                        <div id="editEmailModal{{ email.id }}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <ul style="list-style-type: none">
+                        <li style="display: inline"><h4 style="display: inline">telefon</h4></li>
+                        <li style="display: inline; float:right"><a data-toggle="modal" href="{{ path('add_phone', {'id': contact.id}) }}" data-target="#phoneModal">+ dodaj telefon</a></li>
+                    </ul>
+
+                </div>            
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            {% for phone in contact.phone %}
+                                <tr>
+                                    <th>{{ phone.phoneType }}</th>
+                                    <td>
+                                        {{ phone.phoneNumber }}
+                                    </td>
+                                    <td style="text-align: right">
+                                        <a data-toggle="modal" href="{{ path('edit_phone', {'id': contact.id, 'phone_id': phone.id}) }}" data-target="#editPhoneModal{{ phone.id }}">edytuj</a> | 
+                                        <a href="{{ path('remove_phone', {'id': contact.id, 'phone_id': phone.id }) }}">usuń</a>
+
+                                        {#modal window - edit phone #}
+                                        <div id="editPhoneModal{{ phone.id }}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    {#modal window - edit contact #}
+    <div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    {#modal window - address #}
+    <div id="addressModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+
+
+    {#modal window - email #}
+    <div id="emailModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+
+
+    {#modal window - phone #}
+    <div id="phoneModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+

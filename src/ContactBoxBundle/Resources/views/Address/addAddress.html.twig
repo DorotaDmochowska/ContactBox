@@ -1,0 +1,21 @@
+{% extends "ContactBoxBundle:Contact:formModalWindow.html.twig" %}
+
+{% block form %}
+        {% block action %}
+        <form action="{{ path('add_address', {'id': id}) }}" method="POST">
+        {% endblock %}
+
+        {{ form_errors(address_form) }}
+
+        {{ form_row(address_form.city) }}
+        {{ form_row(address_form.street) }}
+        {{ form_row(address_form.house_number) }}
+        {{ form_row(address_form.apartment_number) }}
+        {{ form_row(address_form.address_type) }}
+
+        {{ form_rest(address_form) }}
+
+        <input type="submit" value="Zapisz" class="btn btn-outline btn-success btn-lg btn-block" />
+
+    </form>
+{% endblock %}
